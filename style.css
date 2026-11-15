@@ -1,0 +1,525 @@
+/* =========================================================
+   VARIÁVEIS — mude o visual do site inteiro por aqui
+   ========================================================= */
+:root {
+  /* Cores */
+  --cor-destaque: #ffc61a;          /* amarelo principal: título, botões, item ativo */
+  --cor-destaque-escura: #e09f00;   /* âmbar: hover e detalhes */
+  --cor-sobre-destaque: #1a1200;    /* texto sobre fundo amarelo */
+  --cor-texto: #fff8e1;             /* branco levemente creme */
+  --cor-fundo: #1a1200;             /* fundo das seções / se a mídia não carregar */
+  --cor-fundo-alt: #251a02;         /* fundo alternado das seções */
+  --cor-pill: rgba(255, 198, 26, 0.16);
+  --cor-borda: rgba(255, 198, 26, 0.55);
+
+  /* Overlay sobre a foto/vídeo (cor em RGB + intensidade 0 a 1) */
+  --overlay-rgb: 26, 14, 0;         /* marrom escuro quente (use 0, 0, 0 para preto) */
+  --overlay-topo: 0.5;
+  --overlay-base: 0.88;
+
+  /* Fontes */
+  --fonte-titulo: "Orbitron", "Arial Black", sans-serif;
+  --fonte-texto: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Medidas */
+  --espaco: clamp(16px, 2.5vw, 32px);
+  --largura-texto: 900px;
+  --altura-menu: 90px;
+  --tamanho-logo: 72px;
+
+  /* Imagem principal (efeito "janela") */
+  --altura-hero: 100vh;             /* 100vh = tela inteira */
+  --altura-secao: 100vh;            /* cada tópico ocupa a tela inteira */
+  --margem-topo-hero: 0px;          /* use var(--altura-menu) para desgrudar do topo */
+  --margem-hero: 0px;               /* distância até as laterais (ex.: var(--espaco)) */
+  --raio-hero: 0px;                 /* bordas arredondadas (ex.: 28px) */
+
+  /* Fotos dos organizadores: 1 / 1 = quadrada, 3 / 4 = retrato, 4 / 3 = paisagem */
+  --formato-foto-equipe: 1 / 1;
+}
+
+/* =========================================================
+   BASE
+   ========================================================= */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: var(--fonte-texto);
+  color: var(--cor-texto);
+  background: var(--cor-fundo);
+}
+
+a { color: inherit; text-decoration: none; }
+
+/* =========================================================
+   MENU — transparente no topo; ganha fundo ao rolar (.is-scrolled)
+   ========================================================= */
+.topbar {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 10;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;   /* vazio | menu (com logo) | botão */
+  align-items: center;
+  gap: 16px;
+  min-height: var(--altura-menu);
+  padding: 0 var(--espaco);
+  background: linear-gradient(to bottom, rgba(var(--overlay-rgb), 0.65), transparent);
+  transition: background-color 0.3s;
+}
+.topbar.is-scrolled {
+  background: rgba(var(--overlay-rgb), 0.88);
+  border-bottom: 1px solid rgba(255, 198, 26, 0.25);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.menu {
+  grid-column: 2;
+  display: flex;
+  align-items: center;
+  gap: clamp(20px, 3vw, 44px);
+  min-width: 0;
+  overflow-x: auto;              /* no celular, o menu rola de lado */
+  scrollbar-width: none;
+}
+.menu::-webkit-scrollbar { display: none; }
+
+/* Links do menu: texto simples, o ativo fica sublinhado */
+.pill {
+  flex: none;
+  padding: 6px 2px;
+  font-size: 1rem;
+  font-weight: 700;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+.pill:hover,
+.pill:focus-visible { border-bottom-color: rgba(255, 248, 225, 0.6); }
+.pill.is-active {
+  color: var(--cor-destaque);
+  border-bottom-color: var(--cor-destaque);
+}
+
+/* Logo no meio do menu */
+.logo {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: var(--tamanho-logo);
+  height: var(--tamanho-logo);
+  border: 2px solid var(--cor-texto);
+  border-radius: 50%;
+  overflow: hidden;
+}
+.logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+.logo__placeholder {
+  font-family: var(--fonte-titulo);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+}
+
+/* =========================================================
+   BOTÕES
+   ========================================================= */
+.btn-solid,
+.btn-outline {
+  display: inline-block;
+  padding: 14px 36px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: 2px solid var(--cor-destaque);
+  border-radius: 8px;
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+
+/* Preenchido */
+.btn-solid {
+  color: var(--cor-sobre-destaque);
+  background: var(--cor-destaque);
+}
+.btn-solid:hover,
+.btn-solid:focus-visible {
+  background: var(--cor-destaque-escura);
+  border-color: var(--cor-destaque-escura);
+  transform: translateY(-2px);
+}
+
+/* Só contorno */
+.btn-outline {
+  color: var(--cor-destaque);
+  background: rgba(var(--overlay-rgb), 0.35);
+}
+.btn-outline:hover,
+.btn-outline:focus-visible {
+  color: var(--cor-sobre-destaque);
+  background: var(--cor-destaque);
+  transform: translateY(-2px);
+}
+
+/* Versão menor, usada no menu */
+.btn-solid--menu {
+  grid-column: 3;
+  justify-self: end;
+  padding: 10px 22px;
+  font-size: 0.85rem;
+}
+
+/* =========================================================
+   HERO — a imagem/vídeo fica FIXA e o hero é uma "janela" para ela.
+   Ao rolar, as seções (com fundo sólido) deslizam por cima.
+   ========================================================= */
+.hero {
+  position: relative;
+  min-height: var(--altura-hero);
+  min-height: min(var(--altura-hero), 100svh);   /* celular: não passa da área visível */
+  display: flex;
+  align-items: center;           /* conteúdo centralizado na vertical */
+  justify-content: center;
+  margin: var(--margem-topo-hero) var(--margem-hero) 0;
+  padding: calc(var(--altura-menu) + 20px) var(--espaco) 100px;
+  text-align: center;
+
+  /* Recorta a mídia fixa no formato do hero (e arredonda as bordas).
+     É isso que cria o efeito de janela. */
+  clip-path: inset(0 round var(--raio-hero));
+}
+
+/* ---- Mídia de fundo: serve para <img> E <video> ---- */
+.hero__media {
+  position: fixed;               /* <- fixa na tela enquanto a página rola */
+  inset: 0;
+  z-index: 0;
+  /* Fundo de segurança caso a imagem ainda não exista */
+  background: linear-gradient(135deg, #2b1a00, #7a4a00 55%, #e09f00);
+}
+.hero__media img,
+.hero__media video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;             /* preenche sem distorcer */
+  object-position: center;       /* ajuste o enquadramento, ex.: center 30% */
+  display: block;
+}
+
+/* ---- Overlay para contraste do texto ---- */
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    to bottom,
+    rgba(var(--overlay-rgb), var(--overlay-topo)) 0%,
+    rgba(var(--overlay-rgb), 0.3) 40%,
+    rgba(var(--overlay-rgb), var(--overlay-base)) 100%
+  );
+}
+
+/* ---- Conteúdo ---- */
+.hero__content {
+  position: relative;
+  z-index: 2;
+  max-width: var(--largura-texto);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Foto de pessoas recortadas (opcional) */
+.hero__cutout {
+  width: min(560px, 80vw);
+  height: auto;
+  margin-bottom: -40px;          /* sobrepõe um pouco o título */
+}
+
+.hero__title {
+  margin: 0;
+  font-family: var(--fonte-titulo);
+  font-weight: 900;
+  font-size: clamp(2.2rem, 7vw, 5rem);
+  line-height: 1.05;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--cor-destaque);
+  text-shadow: 0 4px 24px rgba(var(--overlay-rgb), 0.7);
+}
+
+.hero__subtitle {
+  margin: 20px 0 0;
+  font-size: clamp(1rem, 2vw, 1.4rem);
+  font-style: italic;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+.hero__text {
+  max-width: 640px;
+  margin: 20px 0 0;
+  font-size: clamp(0.95rem, 1.5vw, 1.15rem);
+  line-height: 1.6;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+/* ---- Informações rápidas (data, local...) ---- */
+.hero__badges {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px 32px;                /* espaço entre uma informação e outra */
+  margin: 48px 0 0;              /* espaço entre o texto e as informações */
+  padding: 0;
+}
+.hero__badges li {
+  padding: 12px 28px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border: 1px solid var(--cor-borda);
+  border-radius: 999px;
+  background: rgba(var(--overlay-rgb), 0.4);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+/* ---- Botões do hero ---- */
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 48px;              /* espaço entre as informações e os botões */
+}
+
+/* ---- Botão de pausar/reproduzir vídeo ---- */
+.hero__toggle {
+  position: absolute;
+  left: var(--espaco);
+  bottom: 24px;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  color: var(--cor-texto);
+  background: rgba(var(--overlay-rgb), 0.55);
+  border: 1px solid var(--cor-borda);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.hero__toggle[hidden] { display: none; }
+.hero__toggle:hover,
+.hero__toggle:focus-visible {
+  color: var(--cor-sobre-destaque);
+  background: var(--cor-destaque);
+}
+.hero__toggle .icon-play { display: none; }
+.hero__toggle.is-paused .icon-play { display: block; }
+.hero__toggle.is-paused .icon-pause { display: none; }
+
+/* ---- Seta de rolagem ---- */
+.hero__scroll {
+  position: absolute;
+  bottom: 24px;
+  left: 50%;
+  z-index: 2;
+  transform: translateX(-50%);
+  animation: pulo 1.8s ease-in-out infinite;
+}
+
+@keyframes pulo {
+  0%, 100% { transform: translate(-50%, 0); }
+  50%      { transform: translate(-50%, 8px); }
+}
+
+/* =========================================================
+   SEÇÕES (História, Galeria, Contato, Quem somos)
+   ========================================================= */
+.section {
+  /* Cada tópico ocupa a tela inteira, com bastante espaço para o conteúdo */
+  position: relative;
+  z-index: 1;                    /* garante que cobre a mídia fixa */
+  min-height: var(--altura-secao);
+  min-height: min(var(--altura-secao), 100svh);
+  padding: calc(var(--altura-menu) + 60px) var(--espaco) 120px;
+  background: var(--cor-fundo);
+}
+.section--alt { background: var(--cor-fundo-alt); }
+
+.section__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section__title {
+  margin: 0 0 24px;
+  font-family: var(--fonte-titulo);
+  font-weight: 800;
+  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  text-transform: uppercase;
+  color: var(--cor-destaque);
+}
+
+.section__text {
+  max-width: 80ch;
+  margin: 0 0 1.2em;
+  font-size: 1.15rem;
+  line-height: 1.8;
+}
+
+/* ---- Galeria ---- */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(260px, 100%), 1fr));
+  gap: 16px;
+}
+.gallery__item { margin: 0; }
+.gallery__item img,
+.placeholder {
+  width: 100%;
+  aspect-ratio: 4 / 3;          /* mesma proporção para todas as fotos */
+  object-fit: cover;
+  border-radius: 12px;
+  display: block;
+}
+.placeholder {
+  display: grid;
+  place-items: center;
+  background: var(--cor-pill);
+  border: 1px dashed var(--cor-borda);
+  color: var(--cor-destaque);
+}
+
+/* ---- Quem somos: apresentação (foto do grupo + texto) ---- */
+.about {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+  margin-bottom: 72px;
+}
+/* sem foto do grupo, o texto ocupa a largura toda */
+.about:not(:has(.about__photo)) { grid-template-columns: 1fr; }
+.about__photo { margin: 0; }
+.about__photo img,
+.about__photo .placeholder { aspect-ratio: 4 / 3; }
+
+/* ---- Quem somos: organizadores ---- */
+.team__title {
+  margin: 0 0 28px;
+  font-family: var(--fonte-titulo);
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  text-transform: uppercase;
+  color: var(--cor-destaque);
+}
+
+.team {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+  gap: 40px 24px;
+}
+
+.member { text-align: center; }
+
+.member__photo img,
+.member__photo .placeholder {
+  width: 100%;
+  aspect-ratio: var(--formato-foto-equipe);
+  object-fit: cover;
+  border-radius: 12px;
+  display: block;
+}
+
+.member__name {
+  margin: 16px 0 4px;
+  font-size: 1.15rem;
+}
+.member__role {
+  margin: 0 0 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--cor-destaque);
+}
+.member__bio {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+/* =========================================================
+   RESPONSIVO
+   ========================================================= */
+@media (max-width: 1000px) {
+  /* menu em duas linhas: links (com logo no começo) e botão embaixo */
+  :root { --altura-menu: 130px; --tamanho-logo: 48px; }
+
+  .topbar {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 12px var(--espaco);
+  }
+  .menu { grid-column: 1; }
+  .logo { order: -1; }
+  .btn-solid--menu {
+    grid-column: 1;
+    justify-self: stretch;
+    text-align: center;
+  }
+
+  /* Quem somos: foto do grupo passa para cima do texto */
+  .about { grid-template-columns: 1fr; gap: 28px; margin-bottom: 56px; }
+}
+
+/* ---- Celular ---- */
+@media (max-width: 720px) {
+  .hero { padding-bottom: 120px; }   /* espaço para a seta e o botão de vídeo */
+
+  .hero__badges { gap: 10px 12px; margin-top: 32px; }
+  .hero__badges li {
+    padding: 8px 16px;
+    font-size: 0.78rem;
+  }
+
+  .hero__actions { width: 100%; margin-top: 32px; }
+  .hero__actions .btn-solid,
+  .hero__actions .btn-outline {
+    flex: 1 1 140px;
+    padding: 12px 20px;
+    text-align: center;
+  }
+
+  .section { padding-bottom: 80px; }
+  .section__text { font-size: 1.05rem; line-height: 1.7; }
+  .team { gap: 32px 16px; }
+}
+
+/* ---- Celular pequeno ---- */
+@media (max-width: 480px) {
+  .hero__title { font-size: clamp(1.8rem, 10vw, 2.4rem); }
+  .hero__actions .btn-solid,
+  .hero__actions .btn-outline { flex-basis: 100%; }   /* botões um embaixo do outro */
+
+  .team { grid-template-columns: repeat(2, 1fr); }    /* 2 organizadores por linha */
+  .member__name { font-size: 1rem; }
+  .member__bio  { font-size: 0.88rem; }
+}
+
+/* Respeita quem desativa animações no sistema */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .hero__scroll { animation: none; }
+}

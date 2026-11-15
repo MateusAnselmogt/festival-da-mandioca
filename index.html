@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lagarto em Movimento</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Orbitron:wght@800;900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ===================== MENU ===================== -->
+  <!-- Cada href="#algo" leva até a <section id="algo"> correspondente.
+       Para adicionar um item: copie uma linha <a class="pill"> E crie a <section> com o mesmo id.
+       A logo fica no meio do menu: mova o bloco <a class="logo"> para mudar a posição. -->
+  <header class="topbar">
+    <nav class="menu" aria-label="Navegação principal">
+      <a class="pill is-active" href="#inicio">Início</a>
+      <a class="pill" href="#historia">História</a>
+      <a class="pill" href="#galeria">Galeria</a>
+
+      <!-- LOGO: para usar a logo de verdade, troque o <span> por:
+           <img src="img/logo.png" alt="Logo do evento"> -->
+      <a class="logo" href="#inicio" aria-label="Voltar ao início">
+        <span class="logo__placeholder">LOGO</span>
+      </a>
+
+      <a class="pill" href="#contato">Contato</a>
+      <a class="pill" href="#quem-somos">Quem somos</a>
+    </nav>
+
+    <a class="btn-solid btn-solid--menu" href="#contato">Faça sua submissão</a>
+  </header>
+
+  <main>
+    <!-- ===================== HERO ===================== -->
+    <section class="hero" id="inicio">
+
+      <!-- FUNDO (imagem OU vídeo) -->
+      <div class="hero__media">
+
+        <!-- OPÇÃO A: IMAGEM (ativa) -->
+        <img src="img/festival2.jpeg" alt="Descrição da imagem de fundo">
+
+        <!-- OPÇÃO B: VÍDEO
+             Para usar: apague a <img> acima e remova os comentários abaixo.
+             O "poster" é a imagem exibida enquanto o vídeo carrega.
+             Com o vídeo ativo, o botão de pausar (canto inferior esquerdo) aparece sozinho.
+        <video autoplay muted loop playsinline poster="img/festival2.jpeg">
+          <source src="video/hero.mp4" type="video/mp4">
+        </video>
+        -->
+      </div>
+
+      <!-- Camada escura para dar contraste ao texto (ajuste em style.css) -->
+      <div class="hero__overlay"></div>
+
+      <!-- CONTEÚDO -->
+      <div class="hero__content">
+
+        <!-- OPCIONAL: foto com pessoas recortadas (PNG com fundo transparente)
+        <img class="hero__cutout" src="img/recorte.png" alt="">
+        -->
+
+        <h1 class="hero__title">Festival da Mandioca</h1>
+        <p class="hero__text">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
+          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+          veniam, quis nostrud exercitation ullamco laboris.
+        </p>
+
+        <!-- Informações rápidas (data, local...). Apague/edite os <li> à vontade -->
+        <ul class="hero__badges">
+          <li>Data do evento</li>
+          <li>Local do evento</li>
+          <li>Informação extra</li>
+        </ul>
+
+        <!-- Botões de chamada -->
+        <div class="hero__actions">
+          <a class="btn-solid" href="#historia">Ver mais</a>
+          <a class="btn-outline" href="#galeria">Galeria</a>
+        </div>
+      </div>
+
+      <!-- Botão de pausar/reproduzir o vídeo (só aparece se houver <video>) -->
+      <button class="hero__toggle" type="button" aria-label="Pausar vídeo" hidden>
+        <svg class="icon-pause" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+          <rect x="6" y="5" width="4" height="14" rx="1"></rect>
+          <rect x="14" y="5" width="4" height="14" rx="1"></rect>
+        </svg>
+        <svg class="icon-play" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+          <path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"></path>
+        </svg>
+      </button>
+
+      <!-- Seta de rolagem: leva para a seção logo abaixo do hero -->
+      <a class="hero__scroll" href="#historia" aria-label="Rolar para a próxima seção">
+        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor"
+             stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </a>
+    </section>
+
+    <!-- ===================== HISTÓRIA ===================== -->
+    <section class="section" id="historia">
+      <div class="section__inner">
+        <h2 class="section__title">História</h2>
+        <p class="section__text">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
+          tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+          veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===================== GALERIA ===================== -->
+    <!-- Cada <figure class="gallery__item"> é uma foto.
+         Troque o <div class="placeholder"> por <img src="img/foto1.jpg" alt="..."> -->
+    <section class="section section--alt" id="galeria">
+      <div class="section__inner">
+        <h2 class="section__title">Galeria</h2>
+        <div class="gallery">
+          <figure class="gallery__item"><div class="placeholder">Foto 1</div></figure>
+          <figure class="gallery__item"><div class="placeholder">Foto 2</div></figure>
+          <figure class="gallery__item"><div class="placeholder">Foto 3</div></figure>
+          <figure class="gallery__item"><div class="placeholder">Foto 4</div></figure>
+          <figure class="gallery__item"><div class="placeholder">Foto 5</div></figure>
+          <figure class="gallery__item"><div class="placeholder">Foto 6</div></figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== CONTATO ===================== -->
+    <section class="section" id="contato">
+      <div class="section__inner">
+        <h2 class="section__title">Contato</h2>
+        <p class="section__text">
+          Lorem ipsum dolor sit amet. Aqui entram e-mail, redes sociais ou
+          o formulário de submissão.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===================== QUEM SOMOS ===================== -->
+    <section class="section section--alt" id="quem-somos">
+      <div class="section__inner">
+        <h2 class="section__title">Quem somos</h2>
+
+        <!-- APRESENTAÇÃO: foto do grupo + descrição.
+             Para usar a foto: troque o <div class="placeholder"> por
+             <img src="img/grupo.jpg" alt="Foto do grupo organizador">
+             Se não quiser a foto do grupo, apague o <figure> e o texto ocupa a largura toda. -->
+        <div class="about">
+          <figure class="about__photo">
+            <div class="placeholder">Foto do grupo</div>
+          </figure>
+
+          <div class="about__text">
+            <p class="section__text">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
+              tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+              veniam, quis nostrud exercitation ullamco laboris.
+            </p>
+            <p class="section__text">
+              Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
+              dolore eu fugiat nulla pariatur.
+            </p>
+          </div>
+        </div>
+
+        <!-- ORGANIZADORES: um <article class="member"> por pessoa.
+             Para adicionar alguém: copie um bloco inteiro. Para tirar: apague o bloco.
+             Foto: troque o <div class="placeholder"> por
+             <img src="img/nome.jpg" alt="Foto de Nome do organizador"> -->
+        <h3 class="team__title">Organizadores</h3>
+        <div class="team">
+
+          <article class="member">
+            <div class="member__photo"><div class="placeholder">Foto</div></div>
+            <h4 class="member__name">Nome do organizador</h4>
+            <p class="member__role">Função</p>
+            <p class="member__bio">Descrição curta sobre a pessoa e o que ela fez no evento.</p>
+          </article>
+
+          <article class="member">
+            <div class="member__photo"><div class="placeholder">Foto</div></div>
+            <h4 class="member__name">Nome do organizador</h4>
+            <p class="member__role">Função</p>
+            <p class="member__bio">Descrição curta sobre a pessoa e o que ela fez no evento.</p>
+          </article>
+
+          <article class="member">
+            <div class="member__photo"><div class="placeholder">Foto</div></div>
+            <h4 class="member__name">Nome do organizador</h4>
+            <p class="member__role">Função</p>
+            <p class="member__bio">Descrição curta sobre a pessoa e o que ela fez no evento.</p>
+          </article>
+
+          <article class="member">
+            <div class="member__photo"><div class="placeholder">Foto</div></div>
+            <h4 class="member__name">Nome do organizador</h4>
+            <p class="member__role">Função</p>
+            <p class="member__bio">Descrição curta sobre a pessoa e o que ela fez no evento.</p>
+          </article>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
